@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class GreetingController {
+public class AppController {
 
-    @GetMapping("/greeting")
+    @GetMapping("/index")
     public String greetingForm(Model model) {
-        model.addAttribute("greeting", new Greeting());
-        return "greeting";
+        model.addAttribute("text", new Text());
+        return "index";
     }
 
-    @PostMapping("/greeting")
-    public String greetingSubmit(@ModelAttribute Greeting greeting) {
-        return "result";
+    @PostMapping("/index")
+    public String greetingSubmit(@ModelAttribute Text text) {
+        return "index";
     }
 
 }
