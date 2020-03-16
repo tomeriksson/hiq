@@ -19,7 +19,6 @@ const FileInput = () => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('file', file);
-
         try {
             const res = await axios.post('/upload', formData, {
                 headers: {
@@ -35,9 +34,14 @@ const FileInput = () => {
                     // Clear percentage
                     setTimeout(() => setUploadPercentage(0), 10000);
                 }
+            }).then(response => {
+                console.log(response.data);
+            }, error => {
+                console.log(error);
             });
 
             const { fileName, filePath } = res.data;
+
 
             setUploadedFile({ fileName, filePath });
 
