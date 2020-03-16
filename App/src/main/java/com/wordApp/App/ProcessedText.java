@@ -3,7 +3,7 @@ package com.wordApp.App;
 public class ProcessedText {
     private String content;
     public ProcessedText(String s){
-        content = "Hejsson";
+        content = s.toUpperCase();
     }
     public String getContent() {
         return content;
