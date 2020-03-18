@@ -9,6 +9,7 @@ const FileInput = () => {
     const [uploadedFile, setUploadedFile] = useState({});
     const [message, setMessage] = useState('');
     const [uploadPercentage, setUploadPercentage] = useState(0);
+    const [text, setText] = useState('');
 
     const onChange = e => {
         setFile(e.target.files[0]);
@@ -35,20 +36,23 @@ const FileInput = () => {
                     setTimeout(() => setUploadPercentage(0), 10000);
                 }
             }).then(response => {
-                console.log(response.data);
+                setText(response.data.content);
+                console.log(response.data.content)
             }, error => {
-                console.log(error);
+                console.log(error.message);
             });
 
+
             const { fileName, filePath } = res.data;
+            console.log(res.data);
 
 
             setUploadedFile({ fileName, filePath });
 
             setMessage('File Uploaded');
         } catch (err) {
-            if (err.response.status === 500) {
-                setMessage('There was a problem with the server');
+            if (err.response.status === 400) {
+                setMessage('File not readable.');
             } else {
                 setMessage(err.response.data.msg);
             }
@@ -87,6 +91,10 @@ const FileInput = () => {
                     </div>
                 </div>
             ) : null}
+            <div className="card-body">
+                <h5 className="card-title">Card title</h5>
+                <p className="card-text">{text ? (text): ''}</p>
+            </div>
         </Fragment>
     );
 };
