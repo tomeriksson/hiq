@@ -20,45 +20,36 @@ const FileInput = () => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('file', file);
-        try {
-            const res = await axios.post('/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-                onUploadProgress: progressEvent => {
-                    setUploadPercentage(
-                        parseInt(
-                            Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                        )
-                    );
 
-                    // Clear percentage
-                    setTimeout(() => setUploadPercentage(0), 10000);
-                }
-            }).then(response => {
-                setText(response.data.content);
-                console.log(response.data.content)
-            }, error => {
-                console.log(error.message);
-            });
+        const res = await axios.post('/process/file', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            onUploadProgress: progressEvent => {
+                setUploadPercentage(
+                    parseInt(
+                        Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                    )
+                );
 
-
-            const { fileName, filePath } = res.data;
-            console.log(res.data);
-
-
-            setUploadedFile({ fileName, filePath });
-
-            setMessage('File Uploaded');
-        } catch (err) {
-            if (err.response.status === 400) {
-                setMessage('File not readable.');
-            } else {
-                setMessage(err.response.data.msg);
+                // Clear percentage
+                setTimeout(() => setUploadPercentage(0), 10000);
             }
-        }
-    };
-
+        }).then(response => {
+            setMessage('File Uploaded');
+            setText(response.data.content);
+            const {fileName, filePath} = res.data;
+            setUploadedFile({fileName, filePath});
+        }).catch(error => {
+            if (error.response.data.status === 400){
+                setMessage(error.response.data.error + ": " + error.response.data.message);
+            }else if(error.response.data.status === 500){
+                setMessage("Something went wrong with the server.");
+            }else{
+                setMessage("Oups! Something went wrong!");
+            }
+        });
+    }
     return (
         <Fragment>
             {message ? <Message msg={message} /> : null}
@@ -91,9 +82,13 @@ const FileInput = () => {
                     </div>
                 </div>
             ) : null}
-            <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">{text ? (text): ''}</p>
+            <div className='col-md-auto col-sm-auto col-lg-auto col-xl-auto col-xs-auto'>
+                <h2 className="text-center">Foo-Bar'ed Text</h2>
+                <div className="card-body">
+                    <div className="card-text">
+                    <pre>{text ? (text): ''}</pre>
+                    </div>
+                </div>
             </div>
         </Fragment>
     );
