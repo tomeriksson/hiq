@@ -5,6 +5,7 @@
 2. Explain why you chose the code structure(s) you used in your solution.
 
 Jag valde att dela upp koden i följande delar:
+
 - Api
 	- Controller
 	- Modeller
