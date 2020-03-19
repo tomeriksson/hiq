@@ -3,7 +3,7 @@ import Message from './Message';
 import Progress from './Progress';
 import axios from 'axios';
 
-const FileInput = () => {
+const FileInputOutput = () => {
     const [file, setFile] = useState('');
     const [filename, setFilename] = useState('Choose File');
     const [uploadedFile, setUploadedFile] = useState({});
@@ -94,4 +94,4 @@ const FileInput = () => {
     );
 };
 
-export default FileInput;
+export default FileInputOutput;

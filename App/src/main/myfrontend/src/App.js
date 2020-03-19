@@ -1,5 +1,5 @@
 import React from 'react';
-import FileInput from './FileInput';
+import FileInputOutput from './FileInputOutput';
 import './App.css';
 
 const App = () => (
@@ -8,7 +8,7 @@ const App = () => (
             <i className='fab fa-react' /> React Foo-Bar Text Transformer
         </h4>
 
-        <FileInput />
+        <FileInputOutput />
     </div>
 );
 
