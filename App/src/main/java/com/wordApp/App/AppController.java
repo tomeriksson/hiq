@@ -2,6 +2,7 @@ package com.wordApp.App;
 
 import com.wordApp.Exceptions.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +20,7 @@ public class AppController {
         return "/index";
     }
 
-   /* // @CrossOrigin(origins = "http://localhost:8080")
-    @PostMapping("/")
-    public @ResponseBody
-    ProcessedText greetingSubmit(@RequestBody Text text) {
-        return new ProcessedText(text.getContent());
-    }
-*/
-    @PostMapping("/process/file")
+    @RequestMapping(value = "/process", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, method = {RequestMethod.POST})
     public @ResponseBody ProcessedText uploadFile(Model model, @RequestParam("file") MultipartFile file) throws IOException {
         handleErrors(file);
         String res = new String(file.getBytes(), StandardCharsets.UTF_8);
@@ -34,7 +28,7 @@ public class AppController {
         return new ProcessedText(res);
     }
 
-    @PostMapping("/process/json")
+    @RequestMapping(value = "/process", consumes = MediaType.APPLICATION_JSON_VALUE, method = {RequestMethod.POST})
     public @ResponseBody ProcessedText uploadJson(@RequestBody Text text) {
         if (text == null || text.getContent().isEmpty()) throw new ContentEmptyException();
         return new ProcessedText(text.getContent());

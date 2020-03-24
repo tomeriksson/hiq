@@ -21,7 +21,7 @@ const FileInputOutput = () => {
         const formData = new FormData();
         formData.append('file', file);
 
-        const res = await axios.post('/process/file', formData, {
+        const res = await axios.post('/process', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
