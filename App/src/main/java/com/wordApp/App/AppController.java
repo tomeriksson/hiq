@@ -14,14 +14,14 @@ import java.nio.charset.StandardCharsets;
 @Controller
 public class AppController {
 
+    //Mapping för index.html,
     @GetMapping("/")
-    public String greetingForm(Model model) {
-        model.addAttribute("text", new Text());
+    public String greetingForm() {
         return "/index";
     }
 
     @RequestMapping(value = "/process", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, method = {RequestMethod.POST})
-    public @ResponseBody ProcessedText uploadFile(Model model, @RequestParam("file") MultipartFile file) throws IOException {
+    public @ResponseBody ProcessedText uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         handleErrors(file);
         String res = new String(file.getBytes(), StandardCharsets.UTF_8);
         if (res == null || res == "") throw new FileNotReadableException();
